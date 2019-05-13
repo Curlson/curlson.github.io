@@ -150,6 +150,7 @@ links_layout: block
 #links_layout: inline
 links:
   shencai: https://shencai.xyz
+  php之道: https://phptherightway.com/
 
 # Sidebar Avatar
 in theme directory(source/images): /images/avatar.jpg
