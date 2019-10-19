@@ -4,12 +4,11 @@ tags:
   - Go
   - 斐波那数列
 categories:
-  - Go 
-  - 算法
+  - [算法, Go]
 ---
 > `斐波纳契数列`，又称黄金分割数列，指的是这样一个数列：1、1、2、3、5、8、13、21、……在数学上，斐波纳契数列以如下被以递归的方法定义：F0=0，F1=1，Fn=F(n-1)+F(n-2)（n>=2，n∈N*）
 
-
+<!-- more -->
 
 #### 递归实现
 ```go
@@ -18,11 +17,11 @@ package main
 import "fmt"
 
 func fibonacci(num int) int{
-	if num<2{
-		return 1
-	}
+    if num<2{
+        return 1
+    }
 	
-	return fibonacci(num-1) + fibonacci(num-2)
+    return fibonacci(num-1) + fibonacci(num-2)
 }
 
 
