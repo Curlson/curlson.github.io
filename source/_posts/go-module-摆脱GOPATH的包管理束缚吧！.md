@@ -14,7 +14,7 @@ categories:
 
 <!-- more -->
 
-##### 一、查看 `Go` 和是否开启 `go module`版本
+查看 `Go` 和是否开启 `go module`版本
 
 ```go
 // 1. 查看 go 版本
