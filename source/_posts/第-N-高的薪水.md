@@ -3,6 +3,11 @@ layout: ppost
 title: 第 N 高的薪水
 date: 2019-10-22 20:00:00
 tags:
+- Leetcode 
+- Mysql
+categories:
+- SQL 架构
+- Mysql
 ---
 
 编写一个 SQL 查询，获取 Employee 表中第 n 高的薪水（Salary）。
