@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Curlson&#39;Blog</title>
+  
+  <subtitle>策马奔腾吧</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://blog.andysun.xyz/"/>
+  <updated>2020-03-22T10:29:39.509Z</updated>
+  <id>http://blog.andysun.xyz/</id>
+  
+  <author>
+    <name>Curlson</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>new blog name test</title>
+    <link href="http://blog.andysun.xyz/2020/03/22/new-blog-name-test/"/>
+    <id>http://blog.andysun.xyz/2020/03/22/new-blog-name-test/</id>
+    <published>2020-03-22T10:29:39.000Z</published>
+    <updated>2020-03-22T10:29:39.509Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>斐波纳契数列</title>
+    <link href="http://blog.andysun.xyz/2020/03/22/go1/"/>
+    <id>http://blog.andysun.xyz/2020/03/22/go1/</id>
+    <published>2020-03-22T10:23:06.065Z</published>
+    <updated>2020-03-22T10:23:06.065Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p><code>斐波纳契数列</code>，又称黄金分割数列，指的是这样一个数列：1、1、2、3、5、8、13、21、……在数学上，斐波纳契数列以如下被以递归的方法定义：F0=0，F1=1，Fn=F(n-1)+F(n-2)（n&gt;=2，n∈N*）</p></blockquote><a id="more"></a><h4 id="递归实现"><a href="#递归实现" class="headerlink" title="递归实现"></a>递归实现</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">fibonacci</span><span class="params">(num <span class="keyword">int</span>)</span> <span class="title">int</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> num&lt;<span class="number">2</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> fibonacci(num<span class="number">-1</span>) + fibonacci(num<span class="number">-2</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line"><span class="keyword">for</span> i := <span class="number">0</span>; i&lt;<span class="number">10</span>; i++&#123;</span><br><span class="line">nums := fibonacci(i)</span><br><span class="line">fmt.Println(nums)</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h4 id="闭包实现"><a href="#闭包实现" class="headerlink" title="闭包实现"></a>闭包实现</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">fibonacci</span><span class="params">()</span> <span class="title">func</span><span class="params">()</span> <span class="title">int</span></span>&#123;</span><br><span class="line">a, b := <span class="number">0</span>, <span class="number">1</span></span><br><span class="line"><span class="keyword">return</span> <span class="function"><span class="keyword">func</span><span class="params">()</span> <span class="title">int</span></span>&#123;</span><br><span class="line">a, b = b, a+b</span><br><span class="line"><span class="keyword">return</span> a</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">f := fibonacci()</span><br><span class="line"><span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">10</span>; i++ &#123;</span><br><span class="line">fmt.Println(f())</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;斐波纳契数列&lt;/code&gt;，又称黄金分割数列，指的是这样一个数列：1、1、2、3、5、8、13、21、……在数学上，斐波纳契数列以如下被以递归的方法定义：F0=0，F1=1，Fn=F(n-1)+F(n-2)（n&amp;gt;=2，n∈N*）&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+    
+      <category term="算法" scheme="http://blog.andysun.xyz/categories/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Go" scheme="http://blog.andysun.xyz/categories/%E7%AE%97%E6%B3%95/Go/"/>
+    
+    
+      <category term="Go" scheme="http://blog.andysun.xyz/tags/Go/"/>
+    
+      <category term="斐波那数列" scheme="http://blog.andysun.xyz/tags/%E6%96%90%E6%B3%A2%E9%82%A3%E6%95%B0%E5%88%97/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MySQL 的int(M) M意义 和大小写</title>
+    <link href="http://blog.andysun.xyz/2019/11/18/MySQL%E7%9A%84int%E5%90%8EM%E5%92%8Cci%E9%97%AE%E9%A2%98/"/>
+    <id>http://blog.andysun.xyz/2019/11/18/MySQL%E7%9A%84int%E5%90%8EM%E5%92%8Cci%E9%97%AE%E9%A2%98/</id>
+    <published>2019-11-18T08:30:22.000Z</published>
+    <updated>2020-03-22T10:23:06.065Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="int-M-内的-M-究竟有何意义？"><a href="#int-M-内的-M-究竟有何意义？" class="headerlink" title="int(M) 内的 M 究竟有何意义？"></a>int(M) 内的 M 究竟有何意义？</h3><p>int(3)和int(11) 能存储的数据大小是一样的</p><p>区别在于 当存储一个数据如 321的时候  int(11)类型的可以 设置在前面填充0 如int(11)里存 321 ，显示在数据库中的可以是00000000321</p> <a id="more"></a><p>mysql中 数字类型可以存储的数值大小如下</p><p><strong>1、bigint</strong></p><p>从 -2^63 (-9223372036854775808) 到 2^63-1 (9223372036854775807) 的整型数据（所有数字），无符号的范围是0到</p><p>18446744073709551615。一位为 8 个字节。</p><p><strong>2、int</strong></p><p>一个正常大小整数。有符号的范围是-2^31 (-2,147,483,648) 到 2^31 - 1 (2,147,483,647) 的整型数据（所有数字），无符号的范围是0到4294967295。一位大小为 4 个字节。<br><strong>int</strong> 的 SQL-92 同义词为 <strong>integer</strong>。</p><p><strong>3、mediumint</strong><br>一个中等大小整数，有符号的范围是-8388608到8388607，无符号的范围是0到16777215。 一位大小为3个字节。</p><p><strong>4、smallint</strong></p><p>一个小整数。有符号的范围是-2^15 (-32,768) 到 2^15 - 1 (32,767) 的整型数据，无符号的范围是0到65535。一位大小为 2 个字节。MySQL提供的功能已经绰绰有余，而且由于MySQL是开放源码软件，因此可以大大降低总体拥有成本。</p><p><strong>5、tinyint</strong></p><p>有符号的范围是-128 - 127，无符号的范围是 从 0 到 255 的整型数据。一位大小为 1 字节。</p><h3 id="MySQL-查询表达式内的字符串区分大小写么？"><a href="#MySQL-查询表达式内的字符串区分大小写么？" class="headerlink" title="MySQL 查询表达式内的字符串区分大小写么？"></a>MySQL 查询表达式内的字符串区分大小写么？</h3><blockquote><p>Mysql 区分不区分大小写和 校对集有关，和mysql 无关。</p></blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ci： case insensitive，大小写不敏感，不区分大小写比较</span><br><span class="line">cs: case sensitive，大小写敏感，区分大小写比较</span><br><span class="line">bin: binary,二进制，使用二进制比较</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;int-M-内的-M-究竟有何意义？&quot;&gt;&lt;a href=&quot;#int-M-内的-M-究竟有何意义？&quot; class=&quot;headerlink&quot; title=&quot;int(M) 内的 M 究竟有何意义？&quot;&gt;&lt;/a&gt;int(M) 内的 M 究竟有何意义？&lt;/h3&gt;&lt;p&gt;int(3)和int(11) 能存储的数据大小是一样的&lt;/p&gt;
+&lt;p&gt;区别在于 当存储一个数据如 321的时候  int(11)类型的可以 设置在前面填充0 如int(11)里存 321 ，显示在数据库中的可以是00000000321&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="MySQL" scheme="http://blog.andysun.xyz/categories/MySQL/"/>
+    
+    
+      <category term="Mysql" scheme="http://blog.andysun.xyz/tags/Mysql/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>逝者如斯</title>
+    <link href="http://blog.andysun.xyz/2019/10/25/%E9%80%9D%E8%80%85%E5%A6%82%E6%96%AF/"/>
+    <id>http://blog.andysun.xyz/2019/10/25/%E9%80%9D%E8%80%85%E5%A6%82%E6%96%AF/</id>
+    <published>2019-10-25T07:55:37.000Z</published>
+    <updated>2020-03-22T10:23:06.065Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote class="blockquote-center"><p>【作者】止如初鉴 【朝代】现代</p><p>夜夜欹眠夜未央，<br>日日游闲日渐长。<br>秋浓春浅秋又去，<br>人来人往人独觞！</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote class=&quot;blockquote-center&quot;&gt;&lt;p&gt;【作者】止如初鉴 【朝代】现代&lt;/p&gt;
+&lt;p&gt;夜夜欹眠夜未央，&lt;br&gt;日日游闲日渐长。&lt;br&gt;秋浓春浅秋又去，&lt;br&gt;人来人往人独觞！&lt;/p&gt;
+&lt;/blockquote&gt;
+      
+    
+    </summary>
+    
+    
+      <category term="诗歌" scheme="http://blog.andysun.xyz/categories/%E8%AF%97%E6%AD%8C/"/>
+    
+    
+      <category term="止如初鉴" scheme="http://blog.andysun.xyz/tags/%E6%AD%A2%E5%A6%82%E5%88%9D%E9%89%B4/"/>
+    
+      <category term="现代" scheme="http://blog.andysun.xyz/tags/%E7%8E%B0%E4%BB%A3/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>从前慢</title>
+    <link href="http://blog.andysun.xyz/2019/10/24/%E4%BB%8E%E5%89%8D%E6%85%A2/"/>
+    <id>http://blog.andysun.xyz/2019/10/24/%E4%BB%8E%E5%89%8D%E6%85%A2/</id>
+    <published>2019-10-24T07:25:52.000Z</published>
+    <updated>2020-03-22T10:23:06.065Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote class="blockquote-center"><p>【作者】木心 【朝代】现代</p><p>记得早先少年时<br>大家诚诚恳恳<br>说一句 是一句<br>清早上火车站<br>长街黑暗无行人<br><a id="more"></a><br>卖豆浆的小店冒着热气<br>从前的日色变得慢<br>车，马，邮件都慢<br>一生只够爱一个人<br>从前的锁也好看<br>钥匙精美有样子<br>你锁了 人家就懂了</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote class=&quot;blockquote-center&quot;&gt;&lt;p&gt;【作者】木心 【朝代】现代&lt;/p&gt;
+&lt;p&gt;记得早先少年时&lt;br&gt;大家诚诚恳恳&lt;br&gt;说一句 是一句&lt;br&gt;清早上火车站&lt;br&gt;长街黑暗无行人&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="诗歌" scheme="http://blog.andysun.xyz/categories/%E8%AF%97%E6%AD%8C/"/>
+    
+    
+      <category term="现代" scheme="http://blog.andysun.xyz/tags/%E7%8E%B0%E4%BB%A3/"/>
+    
+      <category term="木心" scheme="http://blog.andysun.xyz/tags/%E6%9C%A8%E5%BF%83/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>第 N 高的薪水</title>
+    <link href="http://blog.andysun.xyz/2019/10/22/%E7%AC%AC-N-%E9%AB%98%E7%9A%84%E8%96%AA%E6%B0%B4/"/>
+    <id>http://blog.andysun.xyz/2019/10/22/%E7%AC%AC-N-%E9%AB%98%E7%9A%84%E8%96%AA%E6%B0%B4/</id>
+    <published>2019-10-22T12:00:00.000Z</published>
+    <updated>2020-03-22T10:23:06.065Z</updated>
+    
+    <content type="html"><![CDATA[<p>编写一个 SQL 查询，获取 Employee 表中第 n 高的薪水（Salary）。</p><p>+—-+——–+<br>| Id | Salary |<br>+—-+——–+<br>| 1  | 100    |<br>| 2  | 200    |<br>| 3  | 300    |<br>+—-+——–+<br>例如上述 Employee 表，n = 2 时，应返回第二高的薪水 200。如果不存在第 n 高的薪水，那么查询应返回 null。</p><p>+————————+<br>| getNthHighestSalary(2) |<br>+————————+<br>| 200                    |<br>+————————+</p><a id="more"></a><p>格式：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT</span><br><span class="line">BEGIN</span><br><span class="line">    RETURN (</span><br><span class="line">        # Write your MySQL query statement below.</span><br><span class="line">    # 在下面编写 SQL 查询语句</span><br><span class="line">       </span><br><span class="line"></span><br><span class="line">    );</span><br><span class="line">END</span><br></pre></td></tr></table></figure><ul><li><code>DECLARE</code> 变量声明</li><li><code>SET</code> 变量赋值</li><li><code>IF THEN</code>, <code>ELSE</code>, <code>END IF</code> 流程控制</li></ul><h5 id="思路一、"><a href="#思路一、" class="headerlink" title="思路一、"></a>思路一、</h5><p>与求第二高的类似：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT -- 这里是 returns 第三人称</span><br><span class="line">BEGIN</span><br><span class="line"># 这里就是解决了直接写 limit n-1，1 报错的问题</span><br><span class="line">SET N = N -1;</span><br><span class="line">RETURN (</span><br><span class="line">    SELECT DISTINCT salary FROM employee ORDER BY salary DESC LIMIT N, 1</span><br><span class="line">    ); -- ； 别忘了 </span><br><span class="line">END</span><br></pre></td></tr></table></figure><h5 id="思路二、"><a href="#思路二、" class="headerlink" title="思路二、"></a>思路二、</h5><p>相比思路一，这里考虑 <code>N</code>不合理的情况</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">## 第一版</span><br><span class="line">CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT -- 这里是 returns 第三人称</span><br><span class="line">BEGIN</span><br><span class="line">    DECLARE P1 INT;</span><br><span class="line">    DECLARE P2 INT;</span><br><span class="line">    IF(N &lt; 1) THEN</span><br><span class="line">        SET P1 = 0, P2 = 0;</span><br><span class="line">    ELSE</span><br><span class="line">        SET P1 = N - 1, P2 = 1;</span><br><span class="line">    END IF;</span><br><span class="line"></span><br><span class="line"># 这里就是解决了直接写 limit n-1，1 报错的问题</span><br><span class="line">SET N = N -1;</span><br><span class="line">RETURN (</span><br><span class="line">    SELECT IFNULL(</span><br><span class="line">            (</span><br><span class="line">                SELECT DISTINCT salary FROM employee ORDER BY salary DESC LIMIT P1, P2</span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line">        , NULL)</span><br><span class="line">    ); -- ； 别忘了 </span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">### 精简版</span><br><span class="line">CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT</span><br><span class="line">BEGIN</span><br><span class="line">DECLARE P1 DEFAULT N-1;</span><br><span class="line">IF(P1 &lt; 0) THEN</span><br><span class="line">RETURN NULL</span><br><span class="line">ELSE RETURN (</span><br><span class="line">    SELECT IFNULL((</span><br><span class="line">        SELECT </span><br><span class="line">            DISTINCT Salary </span><br><span class="line">            FROM Employee </span><br><span class="line">            ORDER BY Salary </span><br><span class="line">            DESC LIMIT P1, 1</span><br><span class="line">        ), NULL)</span><br><span class="line">    )</span><br><span class="line">    END IF;</span><br><span class="line">END</span><br></pre></td></tr></table></figure><p><a href="https://leetcode-cn.com/problems/nth-highest-salary" target="_blank" rel="noopener">第 N 高的薪水</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;编写一个 SQL 查询，获取 Employee 表中第 n 高的薪水（Salary）。&lt;/p&gt;
+&lt;p&gt;+—-+——–+&lt;br&gt;| Id | Salary |&lt;br&gt;+—-+——–+&lt;br&gt;| 1  | 100    |&lt;br&gt;| 2  | 200    |&lt;br&gt;| 3  | 300    |&lt;br&gt;+—-+——–+&lt;br&gt;例如上述 Employee 表，n = 2 时，应返回第二高的薪水 200。如果不存在第 n 高的薪水，那么查询应返回 null。&lt;/p&gt;
+&lt;p&gt;+————————+&lt;br&gt;| getNthHighestSalary(2) |&lt;br&gt;+————————+&lt;br&gt;| 200                    |&lt;br&gt;+————————+&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="SQL 架构" scheme="http://blog.andysun.xyz/categories/SQL-%E6%9E%B6%E6%9E%84/"/>
+    
+      <category term="Mysql" scheme="http://blog.andysun.xyz/categories/SQL-%E6%9E%B6%E6%9E%84/Mysql/"/>
+    
+    
+      <category term="Mysql" scheme="http://blog.andysun.xyz/tags/Mysql/"/>
+    
+      <category term="Leetcode" scheme="http://blog.andysun.xyz/tags/Leetcode/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>go module 摆脱 GOPATH 的包管理束缚吧！</title>
+    <link href="http://blog.andysun.xyz/2019/10/20/go-module-%E6%91%86%E8%84%B1GOPATH%E7%9A%84%E5%8C%85%E7%AE%A1%E7%90%86%E6%9D%9F%E7%BC%9A%E5%90%A7%EF%BC%81/"/>
+    <id>http://blog.andysun.xyz/2019/10/20/go-module-%E6%91%86%E8%84%B1GOPATH%E7%9A%84%E5%8C%85%E7%AE%A1%E7%90%86%E6%9D%9F%E7%BC%9A%E5%90%A7%EF%BC%81/</id>
+    <published>2019-10-20T15:04:42.000Z</published>
+    <updated>2020-03-22T10:23:06.065Z</updated>
+    
+    <content type="html"><![CDATA[<p>​    最近被 <code>go get</code> 折腾的身不如思，下载墙外的包的时候。就有种段誉使用六脉神剑的感觉，你急它不急，时灵时不灵。终于，找到了 <code>go module</code> 用起来很顺手，从1.11版本开始就已经可以采用 <code>go module</code> 来进行扩展包的管理了，可以让你摆脱 <code>GOPATH</code> 的束缚。</p><a id="more"></a><p>查看 <code>Go</code> 和是否开启 <code>go module</code>版本</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 查看 go 版本</span></span><br><span class="line"><span class="keyword">go</span> version</span><br><span class="line"><span class="comment">// 输出当前 go 的版本，版本大于 1.11 可以使用 go module</span></span><br><span class="line"><span class="keyword">go</span> version go1<span class="number">.12</span><span class="number">.6</span> windows/amd64</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 默认是，go将根据当前目录来决定是否启用 module 功能。这种情况下分为两种情形：</span></span><br><span class="line"><span class="comment">// 当前目录在 GOPATH/src 之外且该目录包含 go.mod 文件，则使用 go module 。</span></span><br></pre></td></tr></table></figure><p>创建测试项目，并进入该项目</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在 GOPATH 目录之外创建测试项目</span></span><br><span class="line">mkdir test</span><br><span class="line"><span class="comment">// 切换到项目内</span></span><br><span class="line">cd test</span><br></pre></td></tr></table></figure><p>创建 <code>hello.go</code> 文件。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// hello.go</span><br><span class="line">package main</span><br><span class="line"></span><br><span class="line">import &quot;bitbucket.org/bigwhite/c&quot;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">    c.CallC()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>我们构建一下 <code>hello.go</code> 这个源码文件：</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># <span class="keyword">go</span> build hello.<span class="keyword">go</span></span><br><span class="line">hello.<span class="keyword">go</span>:<span class="number">3</span>:<span class="number">8</span>: cannot find <span class="keyword">package</span> <span class="string">"bitbucket.org/bigwhite/c"</span> in any of:</span><br><span class="line">    /root/.bin/<span class="keyword">go</span>-tip/src/bitbucket.org/bigwhite/c (from $GOROOT)</span><br><span class="line">    /root/<span class="keyword">go</span>/src/bitbucket.org/bigwhite/c (from $GOPATH)</span><br></pre></td></tr></table></figure><p>​    构建错误！错误原因很明了：在本地的GOPATH下并没有找到bitbucket.org/bigwhite/c路径的package c。传统fix这个问题的方法是手工将package c通过go get下载到本地(并且go get会自动下载package c所依赖的package d)：</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># <span class="keyword">go</span> get bitbucket.org/bigwhite/c</span><br><span class="line"># <span class="keyword">go</span> run hello.<span class="keyword">go</span></span><br><span class="line">call C: master branch</span><br><span class="line">   --&gt; call D:</span><br><span class="line">    call D: master branch</span><br><span class="line">   --&gt; call D end</span><br></pre></td></tr></table></figure><p>​    这种我们最熟悉的Go compiler从$GOPATH下(以及vendor目录下)搜索目标程序的依赖包的模式称为：<strong>“GOPATH mode”</strong>。</p><p>​    使用 <code>Go module</code>（也称之为<code>module-aware mode</code>）解决该问题：</p><p>​    我们首先在项目目录（./test）下创建下创建go.mod:</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// go.mod</span></span><br><span class="line">module hello</span><br></pre></td></tr></table></figure><p>然后构建 <code>hello.go</code></p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># <span class="keyword">go</span> build hello.<span class="keyword">go</span></span><br><span class="line"><span class="keyword">go</span>: finding bitbucket.org/bigwhite/d v0<span class="number">.0</span><span class="number">.0</span><span class="number">-20180714005150</span><span class="number">-3e3</span>f9af80a02</span><br><span class="line"><span class="keyword">go</span>: finding bitbucket.org/bigwhite/c v0<span class="number">.0</span><span class="number">.0</span><span class="number">-20180714063616</span><span class="number">-861</span>b08fcd24b</span><br><span class="line"><span class="keyword">go</span>: downloading bitbucket.org/bigwhite/c v0<span class="number">.0</span><span class="number">.0</span><span class="number">-20180714063616</span><span class="number">-861</span>b08fcd24b</span><br><span class="line"><span class="keyword">go</span>: downloading bitbucket.org/bigwhite/d v0<span class="number">.0</span><span class="number">.0</span><span class="number">-20180714005150</span><span class="number">-3e3</span>f9af80a02</span><br><span class="line"></span><br><span class="line"># ./hello</span><br><span class="line">call C: master branch</span><br><span class="line">   --&gt; call D:</span><br><span class="line">    call D: master branch</span><br><span class="line">   --&gt; call D end</span><br></pre></td></tr></table></figure><p>在“module-aware mode”下，go compiler将下载的依赖包缓存在$GOPATH/src/xxxx下面：</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// $GOPATH/src/xxx     xxx 为包名</span></span><br><span class="line"># tree -L <span class="number">3</span></span><br><span class="line">.</span><br><span class="line">├── bitbucket.org</span><br><span class="line">│   └── bigwhite</span><br><span class="line">│       ├── c@v0<span class="number">.0</span><span class="number">.0</span><span class="number">-20180714063616</span><span class="number">-861</span>b08fcd24b</span><br><span class="line">│       └── d@v0<span class="number">.0</span><span class="number">.0</span><span class="number">-20180714005150</span><span class="number">-3e3</span>f9af80a02</span><br><span class="line">├── cache</span><br><span class="line">│   ├── download</span><br><span class="line">│   │   ├── bitbucket.org</span><br><span class="line">│   │   ├── golang.org</span><br><span class="line">│   │   └── rsc.io</span><br><span class="line">│   └── vcs</span><br><span class="line">│       ├── <span class="number">064503657</span>de46d4574a6ab937a7a3b88fee03aec15729f7493a3dc8e35cc6d80</span><br><span class="line">│       ├── <span class="number">064503657</span>de46d4574a6ab937a7a3b88fee03aec15729f7493a3dc8e35cc6d80.info</span><br><span class="line">│       ├── <span class="number">0</span>c8659d2f971b567bc9bd6644073413a1534735b75ea8a6f1d4ee4121f78fa5b</span><br><span class="line">... ...</span><br></pre></td></tr></table></figure><p>参考资料：</p><ul><li><a href="https://studygolang.com/articles/13697?fr=sidebar" target="_blank" rel="noopener">初探 Go module</a></li><li><a href="https://studygolang.com/articles/15531" target="_blank" rel="noopener">Go Modules 使用教程</a></li><li><a href="https://studygolang.com/articles/23651?fr=sidebar" target="_blank" rel="noopener">Go module 在回顾</a></li><li><a href="http://adophper.com/article-id-1122.html" target="_blank" rel="noopener">go: modules disabled inside</a></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;​    最近被 &lt;code&gt;go get&lt;/code&gt; 折腾的身不如思，下载墙外的包的时候。就有种段誉使用六脉神剑的感觉，你急它不急，时灵时不灵。终于，找到了 &lt;code&gt;go module&lt;/code&gt; 用起来很顺手，从1.11版本开始就已经可以采用 &lt;code&gt;go module&lt;/code&gt; 来进行扩展包的管理了，可以让你摆脱 &lt;code&gt;GOPATH&lt;/code&gt; 的束缚。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Go" scheme="http://blog.andysun.xyz/categories/Go/"/>
+    
+    
+      <category term="Go" scheme="http://blog.andysun.xyz/tags/Go/"/>
+    
+      <category term="包管理工具" scheme="http://blog.andysun.xyz/tags/%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/"/>
+    
+      <category term="Go Module" scheme="http://blog.andysun.xyz/tags/Go-Module/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>第二高的薪水</title>
+    <link href="http://blog.andysun.xyz/2019/10/19/second%20salary/"/>
+    <id>http://blog.andysun.xyz/2019/10/19/second%20salary/</id>
+    <published>2019-10-19T02:01:27.000Z</published>
+    <updated>2020-03-22T10:23:06.065Z</updated>
+    
+    <content type="html"><![CDATA[<p>编写一个 SQL 查询，获取 Employee 表中第二高的薪水（Salary） 。<br><a id="more"></a></p><table><thead><tr><th>Id</th><th>Salary</th></tr></thead><tbody><tr><td>1</td><td>100</td></tr><tr><td>2</td><td>200</td></tr><tr><td>3</td><td>300</td></tr></tbody></table><p>例如上述 Employee 表，SQL查询应该返回 200 作为第二高的薪水。如果不存在第二高的薪水，那么查询应返回 null。</p><table><thead><tr><th>SecondHighestSalary</th></tr></thead><tbody><tr><td>200</td></tr></tbody></table><h5 id="方法一："><a href="#方法一：" class="headerlink" title="方法一："></a>方法一：</h5><ol><li><code>DISTINCT</code> 去除重复</li><li><code>OFFSET</code> 为偏移量</li><li><code>DESC</code> 倒序</li><li>本题结合：<code>ORDER</code>, <code>LIMIT</code>, <code>OFFSET</code>, <code>DISTINCT</code> 可以做到筛选出第二高的值</li><li>可以通过临时表，或者使用 <code>IFNLL</code> 函数，输出默认值</li></ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># select distinct salary from Employee order by salary desc limit 1,1 就可以，</span><br><span class="line"># 但是输不出null，所以外面再加一层 </span><br><span class="line">select (</span><br><span class="line">    select distinct salary from Employee order by salary desc limit 1,1</span><br><span class="line">) as SecondHighestSalary ;</span><br></pre></td></tr></table></figure><h5 id="方法二："><a href="#方法二：" class="headerlink" title="方法二："></a>方法二：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">select max(Salary) as SecondHighestSalary </span><br><span class="line">from Employee </span><br><span class="line">where salary&lt;&gt;(</span><br><span class="line"> select max(Salary)  from Employee </span><br><span class="line">)</span><br></pre></td></tr></table></figure><h5 id="方法三："><a href="#方法三：" class="headerlink" title="方法三："></a>方法三：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 说 group by 比 distinct 快一点</span><br><span class="line">SELECT </span><br><span class="line">IFNULL(</span><br><span class="line">    (SELECT Salary</span><br><span class="line">    From Employee</span><br><span class="line">    GROUP BY Salary</span><br><span class="line">    ORDER BY Salary DESC</span><br><span class="line">    LIMIT 1 OFFSET 1</span><br><span class="line">    ),NULL</span><br><span class="line">)</span><br><span class="line">AS SecondHighestSalary</span><br></pre></td></tr></table></figure><p>来源：力扣（LeetCode）<br><a href="https://leetcode-cn.com/problems/second-highest-salary" target="_blank" rel="noopener">176. 第二高的薪水</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;编写一个 SQL 查询，获取 Employee 表中第二高的薪水（Salary） 。&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="SQL架构" scheme="http://blog.andysun.xyz/categories/SQL%E6%9E%B6%E6%9E%84/"/>
+    
+      <category term="Mysql" scheme="http://blog.andysun.xyz/categories/SQL%E6%9E%B6%E6%9E%84/Mysql/"/>
+    
+    
+      <category term="Mysql" scheme="http://blog.andysun.xyz/tags/Mysql/"/>
+    
+      <category term="SQL架构" scheme="http://blog.andysun.xyz/tags/SQL%E6%9E%B6%E6%9E%84/"/>
+    
+      <category term="Leetcode" scheme="http://blog.andysun.xyz/tags/Leetcode/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>哈哈哈...</title>
+    <link href="http://blog.andysun.xyz/2019/05/10/%E5%93%88%E5%93%88%E5%93%88/"/>
+    <id>http://blog.andysun.xyz/2019/05/10/%E5%93%88%E5%93%88%E5%93%88/</id>
+    <published>2019-05-10T09:55:18.000Z</published>
+    <updated>2020-03-22T10:23:06.065Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+</feed>

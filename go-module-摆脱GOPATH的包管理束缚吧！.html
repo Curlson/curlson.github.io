@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content=",,,">
+
+
+
+
+  
+
+
+  <link rel="alternate" href="/atom.xml" title="Curlson'Blog" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="​    最近被 go get 折腾的身不如思，下载墙外的包的时候。就有种段誉使用六脉神剑的感觉，你急它不急，时灵时不灵。终于，找到了 go module 用起来很顺手，从1.11版本开始就已经可以采用 go module 来进行扩展包的管理了，可以让你摆脱 GOPATH 的束缚。">
+<meta name="keywords" content="Go,包管理工具,Go Module">
+<meta property="og:type" content="website">
+<meta property="og:title" content="go module 摆脱 GOPATH 的包管理束缚吧！">
+<meta property="og:url" content="http://blog.andysun.xyz/go-module-摆脱GOPATH的包管理束缚吧！.html">
+<meta property="og:site_name" content="Curlson&#39;Blog">
+<meta property="og:description" content="​    最近被 go get 折腾的身不如思，下载墙外的包的时候。就有种段誉使用六脉神剑的感觉，你急它不急，时灵时不灵。终于，找到了 go module 用起来很顺手，从1.11版本开始就已经可以采用 go module 来进行扩展包的管理了，可以让你摆脱 GOPATH 的束缚。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-03-22T10:23:06.065Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="go module 摆脱 GOPATH 的包管理束缚吧！">
+<meta name="twitter:description" content="​    最近被 go get 折腾的身不如思，下载墙外的包的时候。就有种段誉使用六脉神剑的感觉，你急它不急，时灵时不灵。终于，找到了 go module 用起来很顺手，从1.11版本开始就已经可以采用 go module 来进行扩展包的管理了，可以让你摆脱 GOPATH 的束缚。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.andysun.xyz/go-module-摆脱GOPATH的包管理束缚吧！.html">
+
+
+
+
+
+  <title>go module 摆脱 GOPATH 的包管理束缚吧！ | Curlson'Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Curlson'Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">策马奔腾吧</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+	<h2 class="post-title" itemprop="name headline">go module 摆脱 GOPATH 的包管理束缚吧！</h2>
+
+
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <p>​    最近被 <code>go get</code> 折腾的身不如思，下载墙外的包的时候。就有种段誉使用六脉神剑的感觉，你急它不急，时灵时不灵。终于，找到了 <code>go module</code> 用起来很顺手，从1.11版本开始就已经可以采用 <code>go module</code> 来进行扩展包的管理了，可以让你摆脱 <code>GOPATH</code> 的束缚。</p>
+<a id="more"></a>
+<p>查看 <code>Go</code> 和是否开启 <code>go module</code>版本</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 查看 go 版本</span></span><br><span class="line"><span class="keyword">go</span> version</span><br><span class="line"><span class="comment">// 输出当前 go 的版本，版本大于 1.11 可以使用 go module</span></span><br><span class="line"><span class="keyword">go</span> version go1<span class="number">.12</span><span class="number">.6</span> windows/amd64</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 默认是，go将根据当前目录来决定是否启用 module 功能。这种情况下分为两种情形：</span></span><br><span class="line"><span class="comment">// 当前目录在 GOPATH/src 之外且该目录包含 go.mod 文件，则使用 go module 。</span></span><br></pre></td></tr></table></figure>
+<p>创建测试项目，并进入该项目</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在 GOPATH 目录之外创建测试项目</span></span><br><span class="line">mkdir test</span><br><span class="line"><span class="comment">// 切换到项目内</span></span><br><span class="line">cd test</span><br></pre></td></tr></table></figure>
+<p>创建 <code>hello.go</code> 文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// hello.go</span><br><span class="line">package main</span><br><span class="line"></span><br><span class="line">import &quot;bitbucket.org/bigwhite/c&quot;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">    c.CallC()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们构建一下 <code>hello.go</code> 这个源码文件：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># <span class="keyword">go</span> build hello.<span class="keyword">go</span></span><br><span class="line">hello.<span class="keyword">go</span>:<span class="number">3</span>:<span class="number">8</span>: cannot find <span class="keyword">package</span> <span class="string">"bitbucket.org/bigwhite/c"</span> in any of:</span><br><span class="line">    /root/.bin/<span class="keyword">go</span>-tip/src/bitbucket.org/bigwhite/c (from $GOROOT)</span><br><span class="line">    /root/<span class="keyword">go</span>/src/bitbucket.org/bigwhite/c (from $GOPATH)</span><br></pre></td></tr></table></figure>
+<p>​    构建错误！错误原因很明了：在本地的GOPATH下并没有找到bitbucket.org/bigwhite/c路径的package c。传统fix这个问题的方法是手工将package c通过go get下载到本地(并且go get会自动下载package c所依赖的package d)：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># <span class="keyword">go</span> get bitbucket.org/bigwhite/c</span><br><span class="line"># <span class="keyword">go</span> run hello.<span class="keyword">go</span></span><br><span class="line">call C: master branch</span><br><span class="line">   --&gt; call D:</span><br><span class="line">    call D: master branch</span><br><span class="line">   --&gt; call D end</span><br></pre></td></tr></table></figure>
+<p>​    这种我们最熟悉的Go compiler从$GOPATH下(以及vendor目录下)搜索目标程序的依赖包的模式称为：<strong>“GOPATH mode”</strong>。</p>
+<p>​    使用 <code>Go module</code>（也称之为<code>module-aware mode</code>）解决该问题：</p>
+<p>​    我们首先在项目目录（./test）下创建下创建go.mod:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// go.mod</span></span><br><span class="line">module hello</span><br></pre></td></tr></table></figure>
+<p>然后构建 <code>hello.go</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># <span class="keyword">go</span> build hello.<span class="keyword">go</span></span><br><span class="line"><span class="keyword">go</span>: finding bitbucket.org/bigwhite/d v0<span class="number">.0</span><span class="number">.0</span><span class="number">-20180714005150</span><span class="number">-3e3</span>f9af80a02</span><br><span class="line"><span class="keyword">go</span>: finding bitbucket.org/bigwhite/c v0<span class="number">.0</span><span class="number">.0</span><span class="number">-20180714063616</span><span class="number">-861</span>b08fcd24b</span><br><span class="line"><span class="keyword">go</span>: downloading bitbucket.org/bigwhite/c v0<span class="number">.0</span><span class="number">.0</span><span class="number">-20180714063616</span><span class="number">-861</span>b08fcd24b</span><br><span class="line"><span class="keyword">go</span>: downloading bitbucket.org/bigwhite/d v0<span class="number">.0</span><span class="number">.0</span><span class="number">-20180714005150</span><span class="number">-3e3</span>f9af80a02</span><br><span class="line"></span><br><span class="line"># ./hello</span><br><span class="line">call C: master branch</span><br><span class="line">   --&gt; call D:</span><br><span class="line">    call D: master branch</span><br><span class="line">   --&gt; call D end</span><br></pre></td></tr></table></figure>
+<p>在“module-aware mode”下，go compiler将下载的依赖包缓存在$GOPATH/src/xxxx下面：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// $GOPATH/src/xxx     xxx 为包名</span></span><br><span class="line"># tree -L <span class="number">3</span></span><br><span class="line">.</span><br><span class="line">├── bitbucket.org</span><br><span class="line">│   └── bigwhite</span><br><span class="line">│       ├── c@v0<span class="number">.0</span><span class="number">.0</span><span class="number">-20180714063616</span><span class="number">-861</span>b08fcd24b</span><br><span class="line">│       └── d@v0<span class="number">.0</span><span class="number">.0</span><span class="number">-20180714005150</span><span class="number">-3e3</span>f9af80a02</span><br><span class="line">├── cache</span><br><span class="line">│   ├── download</span><br><span class="line">│   │   ├── bitbucket.org</span><br><span class="line">│   │   ├── golang.org</span><br><span class="line">│   │   └── rsc.io</span><br><span class="line">│   └── vcs</span><br><span class="line">│       ├── <span class="number">064503657</span>de46d4574a6ab937a7a3b88fee03aec15729f7493a3dc8e35cc6d80</span><br><span class="line">│       ├── <span class="number">064503657</span>de46d4574a6ab937a7a3b88fee03aec15729f7493a3dc8e35cc6d80.info</span><br><span class="line">│       ├── <span class="number">0</span>c8659d2f971b567bc9bd6644073413a1534735b75ea8a6f1d4ee4121f78fa5b</span><br><span class="line">... ...</span><br></pre></td></tr></table></figure>
+<p>参考资料：</p>
+<ul>
+<li><a href="https://studygolang.com/articles/13697?fr=sidebar" target="_blank" rel="noopener">初探 Go module</a></li>
+<li><a href="https://studygolang.com/articles/15531" target="_blank" rel="noopener">Go Modules 使用教程</a></li>
+<li><a href="https://studygolang.com/articles/23651?fr=sidebar" target="_blank" rel="noopener">Go module 在回顾</a></li>
+<li><a href="http://adophper.com/article-id-1122.html" target="_blank" rel="noopener">go: modules disabled inside</a></li>
+</ul>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Curlson">
+            
+              <p class="site-author-name" itemprop="name">Curlson</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/curlson" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:curlson@126.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://shencai.xyz" title="shencai" target="_blank">shencai</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://phptherightway.com/" title="php之道" target="_blank">php之道</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Curlson</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
